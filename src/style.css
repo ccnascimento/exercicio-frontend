@@ -1,0 +1,61 @@
+/*
+PORTFOLIO CSS
+*/
+
+/* Site */
+body,
+html {
+  height: 100%;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #dae3e7;
+  font-size: 16px;
+  color: #727272;
+}
+
+#root {
+  height: 100%;
+}
+
+.box {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.box h2 {
+  font-family: "Montserrat";
+  font-size: 24px;
+  font-weight: 700;
+  color: #49515c;
+  margin-bottom: 20px;
+}
+.box p {
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.btn svg {
+  margin-right: 4px;
+}
+.btn--green {
+  background-color: #68b953;
+  color: #fff;
+}
+
+/* Media queries */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+    width: 100%;
+  }
+}
