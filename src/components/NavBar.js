@@ -40,7 +40,7 @@ export default function NavBar() {
           text="Contact me"
           url="/contact"
           icon={<i className="fa fa-paper-plane" />}
-          className="mx-auto w-44 md:ml-auto md:mx-0 mt-8 md:mt-0 bg-green-500 font-bold uppercase table text-white px-4 py-2 rounded-md text-center"
+          className="mx-auto w-38 text-sm md:ml-auto md:mx-0 mt-8 md:mt-0 bg-green-500 font-bold uppercase table text-white px-4 py-2 rounded-md text-center"
         />
       </nav>
     </div>

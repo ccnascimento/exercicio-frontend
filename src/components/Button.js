@@ -15,3 +15,10 @@ Button.propTypes = {
   url: PropTypes.string,
   className: PropTypes.string,
 };
+
+Button.defaultProps = {
+  icon: null,
+  text: null,
+  url: null,
+  className: null,
+};
