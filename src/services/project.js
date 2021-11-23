@@ -1,17 +1,21 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+const baseUrl = "http://localhost:5000";
 
-export const projectApi = createApi({
-  reducerPath: "projectApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
-  tagTypes: ["Projects"],
-  endpoints: (builder) => ({
-    getHighlighted: builder.query({
-      query: (id) => `projects/${id}`,
-    }),
-    getProjects: builder.query({
-      query: () => `projects`,
-    }),
-  }),
-});
+export async function getHighlighted(id) {
+  try {
+    const response = await fetch(`${baseUrl}/projects/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
-export const { useGetHighlighted } = projectApi;
+export async function getAllProjects() {
+  try {
+    const response = await fetch(`${baseUrl}/projects`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}

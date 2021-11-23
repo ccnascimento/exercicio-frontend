@@ -1,13 +1,19 @@
-import React from "react";
-import { projectApi } from "../services/project";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { useContext } from "react";
+import { StoreContext } from "../App";
 import LatestProjectsList from "./LatestProjectsList";
 
-export default function LatestProjects({ highlightedId }) {
-  const { data: projects, error, isLoading } = projectApi.useGetProjectsQuery();
+function LatestProjects({ highlightedId }) {
+  const store = useContext(StoreContext);
 
-  return error ? (
+  useEffect(() => {
+    store.fetchProjects();
+  }, []);
+
+  return store.error ? (
     <>Oh no, there was an error</>
-  ) : isLoading ? (
+  ) : store.isLoading ? (
     <div className="animate-pulse flex flex-col">
       <div className="flex flex-row gap-4">
         <div className="h-32 w-44 bg-blue-500"></div>
@@ -23,7 +29,12 @@ export default function LatestProjects({ highlightedId }) {
         </div>
       </div>
     </div>
-  ) : projects ? (
-    <LatestProjectsList projects={projects} highlightedId={highlightedId} />
+  ) : store.projects.length > 0 ? (
+    <LatestProjectsList
+      projects={store.projects}
+      highlightedId={highlightedId}
+    />
   ) : null;
 }
+
+export default observer(LatestProjects);

@@ -1,17 +1,21 @@
-import React from "react";
-import { projectApi } from "../services/project";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
+import { useContext } from "react";
+import { StoreContext } from "../App";
 import Button from "./Button";
 
-export default function Highlighted({ highlightedId }) {
-  const {
-    data: highlighted,
-    error: highlightedError,
-    isLoading: highlightedIsLoading,
-  } = projectApi.useGetHighlightedQuery(highlightedId);
+function Highlighted({ highlightedId }) {
+  const store = useContext(StoreContext);
+  const hasHighlighted = Object.keys(store.highlighted).length > 0;
 
-  return highlightedError ? (
+  useEffect(() => {
+    store.fetchHighLighted(highlightedId);
+  }, []);
+
+  return store.error ? (
     <>Oh no, there was an error</>
-  ) : highlightedIsLoading ? (
+  ) : store.isLoading ? (
     <div className="animate-pulse flex flex-col">
       <div className="flex-1 space-y-4 py-1">
         <div className="h-4 bg-blue-400 rounded w-2/4 mx-auto"></div>
@@ -24,25 +28,30 @@ export default function Highlighted({ highlightedId }) {
       </div>
       <div className="h-12 bg-blue-400 rounded w-32 mx-auto mt-4 self-center p-0"></div>
     </div>
-  ) : highlighted ? (
+  ) : hasHighlighted ? (
     <article>
       <header>
-        <h1 className="text-xl">{highlighted.title}</h1>
-        <h2 className="text-base">{highlighted.subtitle}</h2>
+        <h1 className="text-xl">{store.highlighted.title}</h1>
+        <h2 className="text-base">{store.highlighted.subtitle}</h2>
       </header>
       <figure>
         <img
-          src={require(`../../public/img/${highlighted.picture}`)}
-          alt={highlighted.title}
+          src={require(`../../public/img/${store.highlighted.picture}`)}
+          alt={store.highlighted.title}
+          width={611}
+          height={254}
+          className="w-full"
         />
       </figure>
-      <p className="mt-8">{highlighted.description}</p>
+      <p className="mt-8">{store.highlighted.description}</p>
       <Button
         icon={<i className="fa fa-thumbs-up" />}
         text="Back my project"
-        url={highlighted.url}
+        url={store.highlighted.url}
         className="mx-auto mt-8 bg-blue-500 font-bold uppercase w-48 text-white text-sm flex justify-center items-center px-4 py-2 rounded-md text-center"
       />
     </article>
   ) : null;
 }
+
+export default observer(Highlighted);
