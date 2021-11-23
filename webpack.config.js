@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 module.exports = {
   devtool: "source-map",
@@ -19,7 +20,13 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        use: ["file-loader"],
+        include: [path.join(__dirname, "public")],
+        use: {
+          loader: "file-loader",
+          options: {
+            esModule: false,
+          },
+        },
       },
     ],
   },
